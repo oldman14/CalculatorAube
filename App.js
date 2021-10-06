@@ -1,9 +1,13 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, SafeAreaView} from 'react-native';
 import Points from './src/screens/Points';
 
 const App = () => {
-  return <Points />;
+  return (
+    <SafeAreaView style={{flex: 1}}>
+      <Points />
+    </SafeAreaView>
+  );
 };
 
 export default App;

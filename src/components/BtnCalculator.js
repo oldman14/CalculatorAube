@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {SIZES, COLORS} from '../../constants';
+import {SIZES, COLORS} from '../constants';
 
 let SPACING = 15;
 const BtnCalculator = ({data, setNumCal, numCal, setListNum, listNum}) => {
@@ -10,12 +10,14 @@ const BtnCalculator = ({data, setNumCal, numCal, setListNum, listNum}) => {
     // console.log(value);
     switch (value) {
       case 'AC':
+        setListNum([]);
         setNumCal(0);
         break;
       case '0':
       case '1':
       case '2':
       case '3':
+      case '4':
       case '5':
       case '6':
       case '7':
@@ -27,12 +29,25 @@ const BtnCalculator = ({data, setNumCal, numCal, setListNum, listNum}) => {
       case '-':
       case '*':
       case '/':
-        setListNum([...listNum, numCal]);
+        console.log(value);
+        {
+          listNum.length < 1
+            ? setListNum([...listNum, numCal, value])
+            : setListNum([...listNum, value, numCal]);
+        }
+
+        setNumCal(0);
         break;
-      // case '=':
-      //     arr.reduce((pre, cur) => {
-      //         return pre + cur;
-      //       }, '');
+      case '%':
+        setNumCal((numCal * 0.01).toFixed(1));
+        break;
+      case '=':
+        let numStr = listNum.reduce((pre, cur) => {
+          return pre + cur;
+        }, '');
+        let result = eval(numStr + numCal);
+        setNumCal('');
+        setListNum([result]);
       default:
         break;
     }

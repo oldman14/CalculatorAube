@@ -46,6 +46,10 @@ const calculator = [
 const Points = () => {
   const [numCal, setNumCal] = useState(0);
   const [listNum, setListNum] = useState([]);
+  const [finalNum, setFinalNum] = useState(0);
+  const result = listNum.reduce((pre, cur) => {
+    return pre + cur;
+  }, '');
   return (
     <View style={styles.container}>
       <View style={styles.resultContainer}>
@@ -55,7 +59,8 @@ const Points = () => {
             alignSelf: 'flex-end',
             fontSize: 50,
           }}>
-          {numCal}
+          {Number(numCal) === 0 ? result : result + numCal}
+          {/* {result + numCal} */}
         </Text>
       </View>
       {calculator.map((listRows, index) => {
@@ -63,6 +68,7 @@ const Points = () => {
         const RenderItem = listRows.map((itemRows, index) => {
           return (
             <BtnCalculator
+              key={index}
               data={itemRows}
               setNumCal={setNumCal}
               numCal={numCal}
